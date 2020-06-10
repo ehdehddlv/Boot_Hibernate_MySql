@@ -48,6 +48,7 @@ public class NoticeService {
 			}
 			String fileName = fileManager.saveFileCopy(mf, file);
 			NoticeFileVO noticeFileVO = new NoticeFileVO();
+			noticeFileVO.setFileNum(noticeVO.getNum());	//보류
 			noticeFileVO.setNoticeVO(noticeVO);
 			noticeFileVO.setFileName(fileName);
 			noticeFileVO.setOriName(mf.getOriginalFilename());
@@ -55,7 +56,7 @@ public class NoticeService {
 			
 			noticeVO.setNoticeFileVOs(noticeFileVOs);
 			
-			System.out.println(fileName);
+			//System.out.println(fileName);
 		}
 		
 		return noticeVO; 

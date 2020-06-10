@@ -98,9 +98,9 @@ public class MemberController {
 	}
 	
 	@PostMapping("memberUpdate")
-	public ModelAndView memberUpdate(@Valid MemberVO memberVO, BindingResult bindingResult, MultipartFile file) throws Exception{
+	public ModelAndView memberUpdate(@Valid MemberVO memberVO, BindingResult bindingResult, MultipartFile multipartFile) throws Exception{
 		ModelAndView mv = new ModelAndView();
-		memberVO = memberService.memberUpdate(memberVO, file);
+		memberVO = memberService.memberUpdate(memberVO, multipartFile);
 		
 		
 		mv.addObject("member", memberVO);

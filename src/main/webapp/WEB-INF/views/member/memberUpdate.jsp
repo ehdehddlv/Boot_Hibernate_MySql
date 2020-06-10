@@ -66,24 +66,30 @@
 						<form:input path="phone" type="text" class="form-control"  placeholder="Enter phone" value="${member.phone}" />
 						<form:errors path="phone" cssClass="mjfe"></form:errors>
 					</div>
-				</div>			
-				
-			<div class="form-group">
-					<div class="col-sm-10">
-						<input type="file" class="form-control" >
-					</div>
-				</div>		
-						<input type="hidden" value="${member.memberFileVO.fileNum}" name="memberFileVO.fileNum" class="form-control" >
-						
-				
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<button type="submit" class="btn btn-default">Submit</button>
-						
-					</div>
 				</div>
-			</form:form>
 
+				<div class="form-group">
+					<input type="button" class="btn btn-info" id="add" value="FileAdd">
+				</div>
+				<div class="form-group" id="f"></div>
+
+			<%-- <input type="hidden" value="${member.memberFileVO.fileNum}" name="memberFileVO.fileNum" class="form-control"> --%>
+
+
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-default">Submit</button>
+
+				</div>
+			</div>
+	</form:form>
+
+<script type="text/javascript">
+	$("#add").click(function(){
+		$("#f").append('<input type="file" name="files">');
+		
+	});
+</script>
 
 </body>
 </html>

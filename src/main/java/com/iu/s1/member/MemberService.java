@@ -59,22 +59,21 @@ public class MemberService {
 		return memberRepository.findById(id);
 	}
 	
-	public MemberVO memberUpdate(MemberVO memberVO, MultipartFile file) throws Exception{
-		File files = pathGenerator.getUseClassPathResource(filePath);
+	public MemberVO memberUpdate(MemberVO memberVO, MultipartFile multipartFile) throws Exception{
+		File file = pathGenerator.getUseClassPathResource(filePath);
 		//File file = pathGenerator.getUseServletContext(filePath);
 		
-		String fileName = fileManager.saveFileCopy(file, files);
-		MemberFileVO memberFileVO = new MemberFileVO();
-	
-		memberFileVO.setFileNum(memberVO.getMemberFileVO().getFileNum());
-		memberFileVO.setFileName(fileName);
-		memberFileVO.setOriName(file.getOriginalFilename());
+		memberVO = memberRepository.save(memberVO);
 		
-		memberVO.setMemberFileVO(memberFileVO);
+		String fileName = fileManager.saveFileCopy(multipartFile, file);
+		MemberFileVO memberFileVO = new MemberFileVO();
+		memberFileVO.setFileName(fileName);
+		memberFileVO.setOriName(multipartFile.getOriginalFilename());
 		memberFileVO.setMemberVO(memberVO);
 		
+		memberVO.setMemberFileVO(memberFileVO);
 		
-		return memberRepository.save(memberVO);
+		return memberVO;
 	}
 	
 }
