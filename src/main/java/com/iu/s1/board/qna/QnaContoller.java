@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -49,9 +50,9 @@ public class QnaContoller {
 	}
 	
 	@GetMapping("qnaList")
-	public ModelAndView boardList(@PageableDefault(size = 10, page = 0, direction = Direction.DESC, sort = {"num"}) Pageable pageable) throws Exception{
+	public ModelAndView boardList(@PageableDefault(size = 10, page = 0, direction = Direction.DESC, sort = {"num"}) Pageable pageable, @RequestParam(value = "search") String search, @RequestParam(value = "kind")String kind) throws Exception{
 		ModelAndView mv = new ModelAndView();
-		Page<QnaVO> ar = qnaService.boardList(pageable);
+		Page<QnaVO> ar = qnaService.boardList(pageable, search, kind);
 		System.out.println(ar.getContent().size());		//현재 보이는 페이지
 		System.out.println(ar.getSize());				//한눈에 보이는 개수
 		System.out.println("Element : "+ar.getTotalElements());	//총 글 개수
@@ -62,7 +63,10 @@ public class QnaContoller {
 		System.out.println("Content : "+ar.hasContent());	//내용이 있냐?
 		System.out.println("First : "+ar.isFirst());	//첫번째 글이냐?
 		System.out.println("Last : "+ar.isLast());		//마지막 글이냐?
-
+		
+		System.out.println("search : "+search);
+		System.out.println("kind : "+kind);
+		
 		mv.addObject("page", ar);
 		mv.setViewName("board/boardList");
 		

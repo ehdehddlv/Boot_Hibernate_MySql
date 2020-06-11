@@ -35,6 +35,6 @@ public class BoardVO {
 	//@UpdateTimestamp	//업데이트 될 때에도 날짜를 넣어줌
 	private Date regDate;
 	@Column
-	private long hit;
+	private Long hit;
 	
 }
