@@ -13,16 +13,17 @@
 	<div class="container">
 		<h2>${board} List</h2>
 		 
-		<form class="col-xs-6" action="./${board}List">
+		<form id="frm" class="col-xs-6" action="./${board}List">
+			<input type="hidden" name="page" id="p">
 			    <div class="input-group">
 			    
 			    <select class="form-control" id="sel1" name="kind">
-				    <option value="bt">Title</option>
-				    <option value="bc">Contents</option>
-				    <option value="bw">Writer</option>
+				    <option id="title" value="title">Title</option>
+				    <option id="writer" value="writer">Writer</option>
+				    <option id="contents" value="contents">Contents</option>
 				</select>
 			    
-			      <input type="text" class="form-control" placeholder="Search" name="search">
+			      <input type="text" class="form-control" placeholder="Search" name="search" value="${param.search}">
 			      <div class="input-group-btn">
 			        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 			      </div>
@@ -65,50 +66,19 @@
 		
 		<div>
 			
-			
-			
-			<c:if test="${not page.isFirst()}">
-				<span><a href="./${board}List?page=0">&lt;&lt;</a></span>
-				<span><a href="./${board}List?page=${page.number-1}">&lt;</a></span> 
-			</c:if>
+			<span><a href="#" class="custompager" title="0">&lt;&lt;</a></span>
+			<span><a href="#" class="custompager" title="${page.number-1}">&lt;</a></span> 
 			
 			<c:forEach begin="${page.number}" end="${page.number+4}" var="i">
 				<c:if test="${i lt page.totalPages}">
-					<a href="./${board}List?page=${i}">${i+1}</a>
+					<a href="#" class="custompager" title="${i}">${i+1}</a>
 				</c:if>
 			</c:forEach>
 			
-			<c:if test="${not page.isLast()}">
-				<span><a href="./${board}List?page=${page.number+1}">&gt;</a></span>
-				<span><a href="./${board}List?page=${page.totalPages-1}">&gt;&gt;</a></span>
-			</c:if>
-			<hr>
-			<c:if test="${not page.isFirst()}">
-				<a href="./${board}List?page=${page.number-1}">[이전페이지]</a> 
-			</c:if>
-			<%-- <span>${param.page}</span> --%>
-			<span>${page.number+1}</span>
-			<c:if test="${not page.isLast()}">
-				<a href="./${board}List?page=${page.number+1}">[다음페이지]</a>
-			</c:if>
+			<span><a href="#" class="custompager" title="${page.number+1}">&gt;</a></span>
+			<span><a href="#" class="custompager" title="${page.totalPages-1}">&gt;&gt;</a></span>
+			
 		</div>
-
-		<%-- <div>
-			<ul class="pagination">
-				<c:if test="${pager.curBlock gt 1}">
-					<li><a
-						href="./${board}List?curPage=${pager.startNum-1}&kind=${pager.kind}&search=${pager.search}">이전</a></li>
-				</c:if>
-				<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i">
-					<li><a
-						href="./${board}List?curPage=${i}&kind=${pager.kind}&search=${pager.search}">${i}</a></li>
-				</c:forEach>
-				<c:if test="${pager.curBlock lt pager.totalBlock}">
-					<li><a
-						href="./${board}List?curPage=${pager.lastNum+1}&kind=${pager.kind}&search=${pager.search}">다음</a></li>
-				</c:if>
-			</ul>	
-		</div> --%>
 		
 		<a href="./${board}Write" class="btn btn-danger">Write</a>
 		
@@ -121,6 +91,26 @@
 	</div>
 	
 	<script type="text/javascript">
+
+		//페이징처리
+		$(".custompager").click(function(){
+			var page = $(this).attr("title");
+			$("#p").val(page);
+			$("#frm").submit();
+			
+		});
+
+		//검색창이 피어있으면 default값을 title로 맞춤
+		var kind = '${param.kind}';
+		if(kind == ''){
+			$("#title").prop("selected", true);
+		}else{
+			$("#"+kind).prop("selected", true);
+		}
+		
+
+
+	
 		var result = '${result}';
 		if(result != ''){
 			if(result=='1'){

@@ -62,14 +62,9 @@ public class QnaContoller {
 		System.out.println("Content : "+ar.hasContent());	//내용이 있냐?
 		System.out.println("First : "+ar.isFirst());	//첫번째 글이냐?
 		System.out.println("Last : "+ar.isLast());		//마지막 글이냐?
-		
-		if(ar.getNumber() > ar.getTotalPages()) {
-			mv.addObject("page", ar);
-			mv.setViewName("board/boardList?page=0");
-		}else {
-			mv.addObject("page", ar);
-			mv.setViewName("board/boardList");
-		}
+
+		mv.addObject("page", ar);
+		mv.setViewName("board/boardList");
 		
 		return mv;
 	}
