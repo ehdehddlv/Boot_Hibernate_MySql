@@ -35,6 +35,7 @@ public class NoticeController {
 	@GetMapping("noticeWrite")
 	public ModelAndView boardInsert() throws Exception{
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("boardVO", new NoticeVO());
 		mv.addObject("path", "Write");
 		mv.setViewName("board/boardWrite");
 		return mv;

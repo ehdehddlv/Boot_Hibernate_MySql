@@ -18,7 +18,7 @@
 	 
 	<div class="container">
 		<h2>${board}${path}</h2>
-		<c:import url="../template/boardForm.jsp"></c:import>
+		<c:import url="../template/springForm.jsp"></c:import>
 	</div>
 	
 	<script type="text/javascript">
