@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.iu.s1.util.Pager;
 
 @Controller
 @RequestMapping("/qna/**/")
@@ -50,9 +54,14 @@ public class QnaContoller {
 	}
 	
 	@GetMapping("qnaList")
-	public ModelAndView boardList(@PageableDefault(size = 10, page = 0, direction = Direction.DESC, sort = {"num"}) Pageable pageable, @RequestParam(value = "search") String search, @RequestParam(value = "kind")String kind) throws Exception{
+	public ModelAndView boardList(Pager pager) throws Exception{
 		ModelAndView mv = new ModelAndView();
-		Page<QnaVO> ar = qnaService.boardList(pageable, search, kind);
+		
+		//service에서 해도 됌
+//		pager.makeRow();
+//		Pageable pageable = PageRequest.of((int)pager.getStartRow(), pager.getPerPage(), Sort.by("ref").descending().and(Sort.by("step").ascending()));
+		
+		Page<QnaVO> ar = qnaService.boardList(pager);
 		System.out.println(ar.getContent().size());		//현재 보이는 페이지
 		System.out.println(ar.getSize());				//한눈에 보이는 개수
 		System.out.println("Element : "+ar.getTotalElements());	//총 글 개수
@@ -64,8 +73,6 @@ public class QnaContoller {
 		System.out.println("First : "+ar.isFirst());	//첫번째 글이냐?
 		System.out.println("Last : "+ar.isLast());		//마지막 글이냐?
 		
-		System.out.println("search : "+search);
-		System.out.println("kind : "+kind);
 		
 		mv.addObject("page", ar);
 		mv.setViewName("board/boardList");

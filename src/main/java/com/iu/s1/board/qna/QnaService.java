@@ -6,8 +6,12 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import com.iu.s1.util.Pager;
 
 @Service
 @Transactional(rollbackOn = Exception.class)
@@ -28,18 +32,21 @@ public class QnaService {
 		return qnaRepository.save(qnaVO);
 	}
 	
-	public Page<QnaVO> boardList(String search, String kind, Pageable pageable) throws Exception{
+	public Page<QnaVO> boardList(Pager pager) throws Exception{
 
-				
+		pager.makeRow();
+		Pageable pageable = PageRequest.of((int)pager.getStartRow(), pager.getPerPage(), Sort.by("ref").descending().and(Sort.by("step").ascending()));
 		
-		if(kind==null || kind.equals("title")) {
-			Page<QnaVO> ar = qnaRepository.findByTitleContaining(search, pageable);
-		}else if(kind.equals("writer")) {
-			qnaRepository.findByWriterContaining(search, pageable);
+		Page<QnaVO> ar = null;
+		
+		if(pager.getKind().equals("title")) {
+			ar = qnaRepository.findByTitleContaining(pager.getSearch(), pageable);
+		}else if(pager.getKind().equals("writer")) {
+			ar = qnaRepository.findByWriterContaining(pager.getSearch(), pageable);
 		}else {
-			
+			ar = qnaRepository.findByContentsContaining(pager.getSearch(), pageable);
 		}
 		
-		return qnaRepository.findAll(pageable);
+		return ar;
 	}
 }
