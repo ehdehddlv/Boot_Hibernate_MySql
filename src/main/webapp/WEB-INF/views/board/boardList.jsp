@@ -14,7 +14,7 @@
 		<h2>${board} List</h2>
 		 
 		<form id="frm" class="col-xs-6" action="./${board}List">
-			<input type="hidden" name="page" id="p">
+			<input type="hidden" name="curPage" id="p">
 			    <div class="input-group">
 			    
 			    <select class="form-control" id="sel1" name="kind">
