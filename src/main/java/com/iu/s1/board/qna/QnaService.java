@@ -28,7 +28,7 @@ public class QnaService {
 		return qnaRepository.save(qnaVO);
 	}
 	
-	public Page<QnaVO> boardList(String search, String kind, Pageable pageable) throws Exception{
+	public Page<QnaVO> boardList(Pageable pageable, String search, String kind) throws Exception{
 
 		Page<QnaVO> ar = null;		
 		
