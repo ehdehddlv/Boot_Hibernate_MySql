@@ -30,16 +30,16 @@ public class QnaService {
 	
 	public Page<QnaVO> boardList(String search, String kind, Pageable pageable) throws Exception{
 
-				
+		Page<QnaVO> ar = null;		
 		
-		if(kind==null || kind.equals("title")) {
-			Page<QnaVO> ar = qnaRepository.findByTitleContaining(search, pageable);
+		if(kind.equals("title")) {
+			ar = qnaRepository.findByTitleContaining(search, pageable);
 		}else if(kind.equals("writer")) {
-			qnaRepository.findByWriterContaining(search, pageable);
+			ar = qnaRepository.findByWriterContaining(search, pageable);
 		}else {
-			
+			ar = qnaRepository.findByContentsContaining(search, pageable);
 		}
 		
-		return qnaRepository.findAll(pageable);
+		return ar;
 	}
 }
