@@ -54,7 +54,7 @@ public class NoticeService {
 			noticeFileVO.setOriName(mf.getOriginalFilename());
 			noticeFileVOs.add(noticeFileVO);
 			
-			noticeVO.setNoticeFileVOs(noticeFileVOs);
+			noticeVO.setBoardFileVOs(noticeFileVOs);
 			
 			//System.out.println(fileName);
 		}
@@ -62,29 +62,29 @@ public class NoticeService {
 		return noticeVO; 
 	}
 	
-	public List<NoticeVO> boardList(Pager pager) throws Exception{
+	public Page<NoticeVO> boardList(Pager pager) throws Exception{
 		pager.makeRow();
 		//pager.makePage(noticeRepository.countByTitleContaining(pager.getSearch()));
-		pager.makePage(noticeRepository.count());
-		Pageable pageable = PageRequest.of((int)pager.getStartRow(), pager.getPerPage(), Sort.Direction.DESC, "num");
+		Pageable pageable = PageRequest.of(pager.getStartRow(), pager.getSize(), Sort.Direction.DESC, "num");
 		
-		List<NoticeVO> noa = new ArrayList<NoticeVO>();
+		Page<NoticeVO> noa = null;
 		
 		if(pager.getKind().equals("writer")) {
-			//noticeRepository.countByWriterContaining(pager.getSearch());
 			noa = noticeRepository.findByWriterContaining(pager.getSearch(), pageable);
 		}else if(pager.getKind().equals("contents")) {
-			//noticeRepository.countByContentsContaining(pager.getSearch());
 			noa = noticeRepository.findByContentsContaining(pager.getSearch(), pageable);
 		} else {
-			//noticeRepository.countByTitleContaining(pager.getSearch());
 			noa = noticeRepository.findByTitleContaining(pager.getSearch(), pageable);
 		}
+		
+		pager.makePage(noa.getTotalPages());
 		
 		return noa;
 	}
 	
-	public Optional<NoticeVO> boardSelect(long num) throws Exception{
-		return noticeRepository.findById(num);
+	public NoticeVO boardSelect(NoticeVO noticeVO) throws Exception{
+		noticeVO = noticeRepository.findById(noticeVO.getNum()).get();
+		noticeVO.setHit(noticeVO.getHit()+1);
+		return noticeRepository.save(noticeVO);
 	}
 }

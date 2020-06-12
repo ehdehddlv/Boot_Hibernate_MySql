@@ -23,7 +23,7 @@ class QnaRepositoryTest {
 			qnaVO.setContents("contents"+i+100);
 			qnaVO.setWriter("writer"+i+100);
 			
-			qnaVO = qnaService.boardInsert(qnaVO);
+			//qnaVO = qnaService.boardInsert(qnaVO);
 		}
 		
 	}

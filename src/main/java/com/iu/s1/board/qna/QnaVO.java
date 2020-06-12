@@ -20,14 +20,11 @@ import lombok.EqualsAndHashCode;
 @Table(name = "qna")
 public class QnaVO extends BoardVO{
 
-	@Column
-	private Long ref;
-	@Column
-	private Long step;
-	@Column
-	private Long depth;
+	private long ref;
+	private long step;
+	private long depth;
 	
 	@OneToMany(mappedBy = "qnaVO", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<QnaFileVO> qnaFileVOs;
+	private List<QnaFileVO> boardFileVOs;
 	
 }

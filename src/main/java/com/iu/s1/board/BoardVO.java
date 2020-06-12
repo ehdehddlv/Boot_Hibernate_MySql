@@ -34,7 +34,13 @@ public class BoardVO {
 	@CreationTimestamp	//자동으로 오늘 날짜를 넣어줌
 	//@UpdateTimestamp	//업데이트 될 때에도 날짜를 넣어줌
 	private Date regDate;
-	@Column
 	private Long hit;
+	
+	public Long getHit() {
+		if(hit==null) {
+			this.hit=0L;
+		}
+		return hit;
+	}
 	
 }

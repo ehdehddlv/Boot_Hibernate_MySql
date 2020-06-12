@@ -42,7 +42,7 @@ class NoticeRepositoryTest {
 		noticeFileVO.setNoticeVO(noticeVO);
 		noticeFileVOs.add(noticeFileVO);
 		
-		noticeVO.setNoticeFileVOs(noticeFileVOs);
+		//noticeVO.setNoticeFileVOs(noticeFileVOs);
 		
 	}
 	
@@ -64,7 +64,7 @@ class NoticeRepositoryTest {
 	//update
 	//@Test
 	public void updateTest() throws Exception{
-		noticeVO.setNum(2);
+		//noticeVO.setNum(2);
 		noticeVO.setTitle("update Title");
 		noticeVO = noticeRepository.save(noticeVO);
 		assertNotNull(noticeVO);
@@ -96,7 +96,7 @@ class NoticeRepositoryTest {
 		//데이터가 있냐 없냐 / opt.isPresent()
 		//데이터가 있냐 없냐 / notice != null
 		System.out.println(noticeVO.getRegDate());
-		System.out.println(noticeVO.getNoticeFileVOs().get(0).getFileName());
+		//System.out.println(noticeVO.getNoticeFileVOs().get(0).getFileName());
 		assertNotNull(noticeVO);
 		
 	}

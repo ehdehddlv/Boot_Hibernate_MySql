@@ -14,7 +14,7 @@
 		<h2>${board} List</h2>
 		 
 		<form id="frm" class="col-xs-6" action="./${board}List">
-			<input type="hidden" name="curPage" id="p">
+			<input type="hidden" name="page" id="p">
 			    <div class="input-group">
 			    
 			    <select class="form-control" id="sel1" name="kind">
@@ -58,15 +58,26 @@
 			</c:forEach>
 		</table>
 
-		<%-- <div>
-			<c:forEach begin="1" end="${page.totalPages}" var="i">
-				${i}
-			</c:forEach>
-		</div> --%>
 		
 		<div>
 			
-			<span><a href="#" class="custompager" title="0">&lt;&lt;</a></span>
+			<ul class="pagination">
+				<c:if test="${pager.curBlock > 1}">
+				    <li><a href="#" class="custompager" title="${pager.startNum-1}">이전</a></li>				
+				</c:if>
+				
+				<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="p">
+			    	<li><a href="#" class="custompager" title="${p}">${p}</a></li>
+			    </c:forEach>
+			    
+			    <c:if test="${pager.curBlock < pager.totalBlock}">
+			    	<li><a href="#" class="custompager" title="${pager.lastNum+1}">다음</a></li>
+			    </c:if>
+			</ul>
+			
+			
+			
+			<%-- <span><a href="#" class="custompager" title="0">&lt;&lt;</a></span>
 			<span><a href="#" class="custompager" title="${page.number-1}">&lt;</a></span> 
 			
 			<c:forEach begin="${page.number}" end="${page.number+4}" var="i">
@@ -76,7 +87,7 @@
 			</c:forEach>
 			
 			<span><a href="#" class="custompager" title="${page.number+1}">&gt;</a></span>
-			<span><a href="#" class="custompager" title="${page.totalPages-1}">&gt;&gt;</a></span>
+			<span><a href="#" class="custompager" title="${page.totalPages-1}">&gt;&gt;</a></span> --%>
 			
 		</div>
 		

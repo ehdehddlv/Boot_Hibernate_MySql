@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -57,18 +58,18 @@ public class NoticeController {
 			
 		//									(Page, Size, Sort, column)
 		//Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "num"); 
-		List<NoticeVO> ar = noticeService.boardList(pager);
+		Page<NoticeVO> ar = noticeService.boardList(pager);
 		
-		mv.addObject("list", ar);
+		mv.addObject("page", ar);
+		mv.addObject("pager", pager);
 		mv.setViewName("board/boardList");
 		return mv;
 	}
 	
 	@GetMapping("noticeSelect")
-	public ModelAndView boardSelect(long num, NoticeVO noticeVO) throws Exception{
+	public ModelAndView boardSelect(NoticeVO noticeVO) throws Exception{
 		ModelAndView mv = new ModelAndView();
-		Optional<NoticeVO> opt = noticeService.boardSelect(num);
-		noticeVO = opt.get();
+		noticeVO = noticeService.boardSelect(noticeVO);
 		mv.addObject("vo", noticeVO);
 		mv.setViewName("board/boardSelect");
 		return mv;

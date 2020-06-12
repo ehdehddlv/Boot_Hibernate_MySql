@@ -19,6 +19,10 @@
 		<a href="${board}Update?num=${vo.num}" class="btn btn-primary">Update</a>
 		<a href="${board}Delete?num=${vo.num}" class="btn btn-danger">Delete</a>
 		
+		<c:if test="${board ne 'notice'}">
+				<a href="./${board}Reply?num=${vo.num}" class="btn btn-info">Reply</a>
+		</c:if>
+		
 		<%-- <c:if test="${member.id eq 'admin'}">	
 			<a href="${board}Update?num=${vo.num}" class="btn btn-primary">Update</a>
 			<a href="${board}Delete?num=${vo.num}" class="btn btn-danger">Delete</a>
@@ -27,9 +31,13 @@
 			<a href="${board}Update?num=${vo.num}" class="btn btn-primary">Update</a>
 			<a href="${board}Delete?num=${vo.num}" class="btn btn-danger">Delete</a>
 		</c:if> --%>
-		<c:if test="${board ne 'notice'}">
-				<a href="./${board}Reply?num=${vo.num}" class="btn btn-info">Reply</a>
-		</c:if>
+		
+		<c:forEach items="${vo.boardFileVOs}" var="fileVO">
+			<h2>${fileVO.oriName}</h2>
+			<img src="../upload/${board}/${fileVO.fileName}"/>
+		</c:forEach>
+		
+		
 		
 	</div>	
 	

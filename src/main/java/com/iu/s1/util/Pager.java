@@ -1,20 +1,26 @@
 package com.iu.s1.util;
 
+import org.springframework.stereotype.Component;
+
+import lombok.Data;
+
+@Data
+@Component
 public class Pager {
 
-	private Long curPage;		//현재 페이지
-	private Integer perPage;	//한번에 보이는 페이지
+	private Integer page;		//현재 페이지	(curPage)
+	private Integer size;	//한번에 보이는 페이지 (perPage)
 	
-	private long startRow;
-	private long lastRow;
+	private Integer startRow;
+	private Integer lastRow;
 	
-	private long totalPage;
+	private Integer totalPage;
 	
-	private long totalBlock;
-	private long curBlock;
+	private Integer totalBlock;
+	private Integer curBlock;
 	
-	private long startNum;
-	private long lastNum;
+	private Integer startNum;
+	private Integer lastNum;
 	
 	private String kind;
 	private String search;
@@ -22,30 +28,32 @@ public class Pager {
 	//한눈에 보이는 페이지 설정
 	public void makeRow() {
 		//다음 행으로 넘어갈때 처음으로 보이는 페이지 수  
-		this.startRow = this.getCurPage()-1;	//0, 1, 2가 나와야함
+		this.startRow = this.getPage()-1;	//0, 1, 2가 나와야함
 		//다음 행으로 넘어갈때 마지막으로 보이는 페이지 수
 		//this.lastRow = this.getCurPage()*this.getPerPage();
 	}
 	
-	
-	public void makePage(long totalCount) {
+	//페이지 개수 만들기
+	public void makePage(int totalPage) {
 		//totalCount = 전체 글의 개수
-		this.totalPage = totalCount/this.getPerPage();
+//		this.totalPage = totalCount/this.getSize();
+//		
+//		if(totalCount % this.getSize() != 0) {
+//			this.totalPage++;
+//		}
 		
-		if(totalCount % this.getPerPage() != 0) {
-			this.totalPage++;
-		}
+		this.setTotalPage(totalPage);
 		
-		long perBlock = 5L;
+		int perBlock = 5;
 		this.totalBlock = totalPage/perBlock;
 		
 		if(totalPage % perBlock != 0) {
 			this.totalBlock++;
 		}
 		
-		this.curBlock = this.curPage/perBlock;
+		this.curBlock = this.page/perBlock;
 		
-		if(this.curPage % perBlock != 0) {
+		if(this.page % perBlock != 0) {
 			this.curBlock++;
 		}
 		
@@ -60,84 +68,34 @@ public class Pager {
 	}
 	
 	
-	public Long getCurPage() {
-		if(this.curPage==null || this.curPage==0) {
-			this.curPage = 1L;
+	public Integer getPage() {
+		if(this.page==null || this.page==0) {
+			this.page = 1;
 		}
-		return curPage;
+		return page;
 	}
-	public void setCurPage(Long curPage) {
-		this.curPage = curPage;
-	}
-	public Integer getPerPage() {
-		if(this.perPage==null || this.perPage==0) {
-			this.perPage = 10;
+	
+	public Integer getSize() {
+		if(this.size==null || this.size==0) {
+			this.size = 10;
 		}
-		return perPage;
+		return size;
 	}
-	public void setPerPage(Integer perPage) {
-		this.perPage = perPage;
-	}
-	public long getStartRow() {
-		return startRow;
-	}
-	public void setStartRow(long startRow) {
-		this.startRow = startRow;
-	}
-	public long getLastRow() {
-		return lastRow;
-	}
-	public void setLastRow(long lastRow) {
-		this.lastRow = lastRow;
-	}
-	public long getTotalPage() {
-		return totalPage;
-	}
-	public void setTotalPage(long totalPage) {
-		this.totalPage = totalPage;
-	}
-	public long getTotalBlock() {
-		return totalBlock;
-	}
-	public void setTotalBlock(long totalBlock) {
-		this.totalBlock = totalBlock;
-	}
-	public long getCurBlock() {
-		return curBlock;
-	}
-	public void setCurBlock(long curBlock) {
-		this.curBlock = curBlock;
-	}
-	public long getStartNum() {
-		return startNum;
-	}
-	public void setStartNum(long startNum) {
-		this.startNum = startNum;
-	}
-	public long getLastNum() {
-		return lastNum;
-	}
-	public void setLastNum(long lastNum) {
-		this.lastNum = lastNum;
-	}
+	
 	public String getKind() {
 		if(this.kind == null || this.kind.equals("")) {
 			this.kind = "title";
 		}
 		return kind;
 	}
-	public void setKind(String kind) {
-		this.kind = kind;
-	}
+	
 	public String getSearch() {
 		if(this.search == null) {
 			this.search = "";
 		}
 		return search;
 	}
-	public void setSearch(String search) {
-		this.search = search;
-	}
+	
 	
 	
 }
