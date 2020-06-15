@@ -17,7 +17,7 @@
       <label class="control-label col-sm-2" for="writer">Writer:</label>
       <div class="col-sm-10">          
         <%-- <input type="text" class="form-control" id="writer" placeholder="Enter writer" name="writer" value="${member.id}" readonly="true"> --%>
-        <form:input path="writer" type="text" class="form-control" id="writer" placeholder="Enter writer" />
+        <form:input path="writer" type="text" class="form-control" id="writer" placeholder="Enter writer" value="${member.id}" readonly="true"/>
       </div>
     </div>
      <div class="form-group">

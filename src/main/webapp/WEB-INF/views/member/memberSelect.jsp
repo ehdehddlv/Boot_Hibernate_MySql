@@ -17,7 +17,7 @@
 		<h3>Name : ${member.name}</h3>
 		<h3>Email : ${member.email}</h3>
 		<h3>Phone : ${member.phone}</h3>
-		
+			
 		<c:if test="${member ne null}">
 			<a href="memberUpdate?id=${member.id}" class="btn btn-primary">Update</a>
 			<a href="memberDelete?id=${member.id}" class="btn btn-danger">Delete</a>

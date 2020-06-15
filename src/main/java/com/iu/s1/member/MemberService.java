@@ -3,6 +3,8 @@ package com.iu.s1.member;
 import java.io.File;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -55,8 +57,8 @@ public class MemberService {
 		return memberRepository.findByIdAndPw(id, pw);
 	}
 	
-	public Optional<MemberVO> memberSelect(String id) throws Exception{
-		return memberRepository.findById(id);
+	public MemberVO memberSelect(MemberVO memberVO) throws Exception{
+		return memberRepository.findById(memberVO.getId()).get();
 	}
 	
 	public MemberVO memberUpdate(MemberVO memberVO, MultipartFile multipartFile) throws Exception{

@@ -80,12 +80,8 @@ public class MemberController {
 	}
 	
 	@GetMapping("memberPage")
-	public ModelAndView memberSelect(MemberVO memberVO) throws Exception{
+	public ModelAndView memberSelect() throws Exception{
 		ModelAndView mv = new ModelAndView();
-//		String id = memberVO.getId();
-//		String pw = memberVO.getPw();
-//		memberVO = memberService.memberLogin(id, pw);
-//		mv.addObject("member", memberVO);
 		mv.setViewName("member/memberSelect");
 		return mv;
 	}
